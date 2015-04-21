@@ -110,22 +110,24 @@
           // style[DeviceCapabilities.transformProperty + '-origin'] = transformFrom + '% 50%' + '% 50%';
           //
 
-          var index = distance - 1;
-          index = offset > (slideIndex * -100) ? -index : index;
+          // var index = distance - 1;
+          // index = offset > (slideIndex * -100) ? -index : index;
 
-          console.log(arguments, slideIndex * -100, index, offset === (slideIndex * -100), index === 0);
+          // // console.log(arguments, slideIndex * -100, index, offset === (slideIndex * -100), index === 0);
 
-          if (offset === (slideIndex * -100)) {
-            style[DeviceCapabilities.transformProperty] = 'translateX(0) rotateY(0) scale(1)';
-            style['z-index'] = 100;
-            style.display = '';
-          } else if (Math.abs(index) <= 4) {
-            style[DeviceCapabilities.transformProperty] = 'translateX(' + (index * 50) + 'px) rotateY(' + (index * 10) + 'deg) scale(' + (1 - 2 * Math.abs(index) / slidesCount) + ')';
-            style['z-index'] = 99 - Math.abs(index);
-            style.display = '';
-          } else {
-            style.display = 'none';
-          }
+          // if (offset === (slideIndex * -100)) {
+          //   style[DeviceCapabilities.transformProperty] = 'translateX(0) rotateY(0) scale(1)';
+          //   style['z-index'] = 100;
+          //   style.opacity = 1;
+          //   style.display = '';
+          // } else if (Math.abs(index) <= 4) {
+          //   style[DeviceCapabilities.transformProperty] = 'translateX(' + (index * 60) + 'px) rotateY(' + (index * 10) + 'deg) scale(' + (1 - 2 * Math.abs(index) / slidesCount) + ')';
+          //   style['z-index'] = 99 - Math.abs(index);
+          //   style.opacity = 0.8 + distance * 0.2
+          //   style.display = '';
+          // } else {
+          //   style.display = 'none';
+          // }
 
         } else if (transitionType == 'test') {
 

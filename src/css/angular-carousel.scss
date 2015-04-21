@@ -49,8 +49,8 @@ ul[rn-carousel-transition="mytune"] {
     -webkit-transform: translateZ(0);
     transform-origin: center center;
     transform: translateZ(0);
-    transition: -webkit-transform 0.4s ease-in-out;
-    transition: transform 0.4s ease-in-out;
+    transition: -webkit-transform 0.2s ease-in-out;
+    transition: transform 0.2s ease-in-out;
     cursor: hand;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -59,9 +59,9 @@ ul[rn-carousel-transition="mytune"] {
     -ms-user-select: none;
     user-select: none;
     width: 150px;
-    -webkit-box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.75);
-    -moz-box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.75);
-    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.75);
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
   }
 }
 /* indicators */
