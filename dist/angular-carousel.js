@@ -1,6 +1,6 @@
 /**
  * Angular Carousel - Mobile friendly touch carousel for AngularJS
- * @version v0.3.10 - 2015-04-20
+ * @version v0.3.10 - 2015-04-21
  * @link http://revolunet.github.com/angular-carousel
  * @author Julien Bouquillon <julien@revolunet.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
@@ -138,7 +138,7 @@ angular.module('angular-carousel').run(['$templateCache', function($templateCach
 
   .service('computeCarouselSlideStyle', ["DeviceCapabilities", function (DeviceCapabilities) {
     // compute transition transform properties for a given slide and global offset
-    return function (slideIndex, offset, transitionType) {
+    return function (slideIndex, slidesCount, offset, transitionType) {
       var style = {
           display: 'inline-block'
         },
@@ -170,29 +170,40 @@ angular.module('angular-carousel').run(['$templateCache', function($templateCach
 
         } else if (transitionType == 'mytune') {
 
-          var transformFrom = 100,
-            degrees = 0,
-            maxDegrees = 30 * (distance - 1);
+          // var transformFrom = 100;
+          // var degrees = 0;
+          // var maxDegrees = 30 * (distance - 1);
 
           // console.log("maxDegrees...", maxDegrees);
           // console.log("distance...", distance);
 
           // maxDegrees = maxDegrees > 60 ? maxDegrees : 150;
 
-          transformFrom = offset < (slideIndex * -100) ? 100 : 0;
-          degrees = offset > (slideIndex * -100) ? maxDegrees : -maxDegrees;
+          // transformFrom = offset < (slideIndex * -100) ? 100 : 0;
+          // degrees = offset > (slideIndex * -100) ? -maxDegrees : maxDegrees;
 
-          if (degrees > 60 || degrees < -60) {
-            style.opacity = 0;
-          }
+          // if (degrees > 60 || degrees < -60) {
+          //   style.opacity = 0;
+          // }
 
-          style[DeviceCapabilities.transformProperty + '-origin'] = transformFrom + '% 50%' + '% 50%';
+          // style[DeviceCapabilities.transformProperty + '-origin'] = transformFrom + '% 50%' + '% 50%';
+          //
+
+          var index = distance - 1;
+          index = offset > (slideIndex * -100) ? -index : index;
+
+          console.log(arguments, slideIndex * -100, index, offset === (slideIndex * -100), index === 0);
 
           if (offset === (slideIndex * -100)) {
-            style[DeviceCapabilities.transformProperty] = slideTransformValue + ' ' + 'rotateY(' + degrees + 'deg)';
+            style[DeviceCapabilities.transformProperty] = 'translateX(0) rotateY(0) scale(1)';
+            style['z-index'] = 100;
+            style.display = '';
+          } else if (Math.abs(index) <= 4) {
+            style[DeviceCapabilities.transformProperty] = 'translateX(' + (index * 50) + 'px) rotateY(' + (index * 10) + 'deg) scale(' + (1 - 2 * Math.abs(index) / slidesCount) + ')';
+            style['z-index'] = 99 - Math.abs(index);
+            style.display = '';
           } else {
-            var scale = 0.9;
-            style[DeviceCapabilities.transformProperty] = slideTransformValue + ' ' + 'rotateY(' + degrees + 'deg)' + 'scale(' + scale + ')';
+            style.display = 'none';
           }
 
         } else if (transitionType == 'test') {
@@ -201,7 +212,7 @@ angular.module('angular-carousel').run(['$templateCache', function($templateCach
             degrees = 0,
             maxDegrees = 30;
 
-          transformFrom = offset < (slideIndex * -100) ? maxDegrees : 0;
+          transformFrom = offset < (index * -100) ? maxDegrees : 0;
           degrees = (Math.abs(absoluteLeft) < 100) ? maxDegrees : -maxDegrees;
           style[DeviceCapabilities.transformProperty] = slideTransformValue + 'rotateY(' + degrees + 'deg)' + 'scale(0.8,0.8)';
           style[DeviceCapabilities.transformProperty + '-origin'] = transformFrom + '% 50%' + '% 50%' + '5px';
@@ -359,7 +370,7 @@ angular.module('angular-carousel').run(['$templateCache', function($templateCach
               // todo : optim : apply only to visible items
               var x = scope.carouselBufferIndex * 100 + offset;
               angular.forEach(getSlidesDOM(), function (child, index) {
-                child.style.cssText = createStyleString(computeCarouselSlideStyle(index, x, options.transitionType));
+                child.style.cssText = createStyleString(computeCarouselSlideStyle(index, currentSlides.length, x, options.transitionType));
               });
             }
 
